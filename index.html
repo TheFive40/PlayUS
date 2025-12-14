@@ -1,632 +1,633 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Ti ❤️</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para ti mi Angelito ❤️</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b3d 100%);
-            color: #fff;
-            overflow-x: hidden;
-        }
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d1b3d 100%);
+      color: #fff;
+      overflow-x: hidden;
+    }
 
-        /* Pantalla de Juego */
-        #game-screen {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-        }
+    #game-screen {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .game-header {
-            padding: 20px;
-            text-align: center;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 10;
-        }
+    .game-header {
+      padding: 20px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 10;
+    }
 
-        .game-title {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #b794f6;
-            text-shadow: 0 0 20px rgba(183, 148, 246, 0.5);
-        }
+    .game-title {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #b794f6;
+      text-shadow: 0 0 20px rgba(183, 148, 246, 0.5);
+    }
 
-        .game-subtitle {
-            font-size: 1.1em;
-            color: #ddd;
-            margin-bottom: 15px;
-        }
+    .game-subtitle {
+      font-size: 1.1em;
+      color: #ddd;
+      margin-bottom: 15px;
+    }
 
-        .game-stats {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
+    .game-stats {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
 
-        .stat-item {
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid #b794f6;
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-size: 1.1em;
-        }
+    .stat-item {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid #b794f6;
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-size: 1.1em;
+    }
 
-        .stat-label {
-            color: #b794f6;
-            font-weight: bold;
-        }
+    .stat-label {
+      color: #b794f6;
+      font-weight: bold;
+    }
 
-        .progress-bar {
-            width: 200px;
-            height: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid #b794f6;
-            border-radius: 10px;
-            overflow: hidden;
-            display: inline-block;
-            vertical-align: middle;
-            margin-left: 10px;
-        }
+    .progress-bar {
+      width: 200px;
+      height: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid #b794f6;
+      border-radius: 10px;
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10px;
+    }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #b794f6, #7c3aed);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #b794f6, #7c3aed);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
 
-        /* Área de juego */
-        .game-area {
-            flex: 1;
-            position: relative;
-            cursor: crosshair;
-        }
+    .game-area {
+      flex: 1;
+      position: relative;
+      cursor: crosshair;
+    }
 
-        /* Corazones flotantes */
-        .floating-heart {
-            position: absolute;
-            font-size: 3em;
-            cursor: pointer;
-            animation: float 3s ease-in;
-            user-select: none;
-            z-index: 5;
-            transition: transform 0.1s ease;
-        }
+    .floating-heart {
+      position: absolute;
+      font-size: 3em;
+      cursor: pointer;
+      animation: float 3s ease-in;
+      user-select: none;
+      z-index: 5;
+      transition: transform 0.1s ease;
+    }
 
-        .floating-heart:hover {
-            transform: scale(1.2);
-        }
+    .floating-heart:hover {
+      transform: scale(1.2);
+    }
 
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
 
-        /* Efecto de captura */
-        @keyframes capture {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(2) rotate(180deg);
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(0);
-                opacity: 0;
-            }
-        }
+    @keyframes capture {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(2) rotate(180deg);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
 
-        .captured {
-            animation: capture 0.5s ease !important;
-        }
+    .captured {
+      animation: capture 0.5s ease !important;
+    }
 
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-        .modal.active {
-            display: flex;
-        }
+    .modal.active {
+      display: flex;
+    }
 
-        .modal-content {
-            background: linear-gradient(135deg, #2d1b3d 0%, #1a1a1a 100%);
-            border: 3px solid #b794f6;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 0 50px rgba(183, 148, 246, 0.5);
-            animation: modalSlide 0.5s ease;
-        }
+    .modal-content {
+      background: linear-gradient(135deg, #2d1b3d 0%, #1a1a1a 100%);
+      border: 3px solid #b794f6;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 50px rgba(183, 148, 246, 0.5);
+      animation: modalSlide 0.5s ease;
+    }
 
-        @keyframes modalSlide {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
+    @keyframes modalSlide {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
 
-        .modal-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-        }
+    .modal-icon {
+      font-size: 4em;
+      margin-bottom: 20px;
+    }
 
-        .modal-title {
-            font-size: 2em;
-            margin-bottom: 20px;
-            color: #b794f6;
-            text-transform: uppercase;
-        }
+    .modal-title {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #b794f6;
+      text-transform: uppercase;
+    }
 
-        .modal-text {
-            font-size: 1.3em;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            color: #ddd;
-        }
+    .modal-text {
+      font-size: 1.3em;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      color: #ddd;
+    }
 
-        .modal-button {
-            background: linear-gradient(90deg, #b794f6, #7c3aed);
-            color: #fff;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.1em;
-            border-radius: 10px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-        }
+    .modal-button {
+      background: linear-gradient(90deg, #b794f6, #7c3aed);
+      color: #fff;
+      border: none;
+      padding: 15px 40px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+    }
 
-        .modal-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(183, 148, 246, 0.7);
-        }
+    .modal-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 20px rgba(183, 148, 246, 0.7);
+    }
 
-        /* Pantalla Principal */
-        #main-screen {
-            display: none;
-            min-height: 100vh;
-            padding: 40px 20px;
-        }
+    #main-screen {
+      display: none;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
 
-        #main-screen.active {
-            display: block;
-            animation: fadeIn 1s ease;
-        }
+    #main-screen.active {
+      display: block;
+      animation: fadeIn 1s ease;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-        .main-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
+    .main-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
 
-        .main-title {
-            font-size: 3em;
-            color: #b794f6;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            margin-bottom: 10px;
-            text-shadow: 0 0 30px rgba(183, 148, 246, 0.7);
-        }
+    .main-title {
+      font-size: 3em;
+      color: #b794f6;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 30px rgba(183, 148, 246, 0.7);
+    }
 
-        .main-subtitle {
-            font-size: 1.3em;
-            color: #ddd;
-        }
+    .main-subtitle {
+      font-size: 1.3em;
+      color: #ddd;
+    }
 
-        .main-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 50px;
-        }
+    .main-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 50px;
+    }
 
-        .main-btn {
-            background: rgba(0, 0, 0, 0.7);
-            border: 3px solid #b794f6;
-            color: #fff;
-            padding: 20px 40px;
-            font-size: 1.2em;
-            border-radius: 15px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-        }
+    .main-btn {
+      background: rgba(0, 0, 0, 0.7);
+      border: 3px solid #b794f6;
+      color: #fff;
+      padding: 20px 40px;
+      font-size: 1.2em;
+      border-radius: 15px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+    }
 
-        .main-btn:hover {
-            background: #b794f6;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(183, 148, 246, 0.5);
-        }
+    .main-btn:hover {
+      background: #b794f6;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(183, 148, 246, 0.5);
+    }
 
-        .main-btn.active {
-            background: linear-gradient(90deg, #b794f6, #7c3aed);
-            border-color: #7c3aed;
-        }
+    .main-btn.active {
+      background: linear-gradient(90deg, #b794f6, #7c3aed);
+      border-color: #7c3aed;
+    }
 
-        .content-section {
-            display: none;
-            max-width: 1200px;
-            margin: 0 auto;
-            animation: fadeIn 0.5s ease;
-        }
+    .content-section {
+      display: none;
+      max-width: 1200px;
+      margin: 0 auto;
+      animation: fadeIn 0.5s ease;
+    }
 
-        .content-section.active {
-            display: block;
-        }
+    .content-section.active {
+      display: block;
+    }
 
-        /* Carta de Amor */
-        .love-letter {
-            background: rgba(0, 0, 0, 0.8);
-            border: 3px solid #b794f6;
-            border-radius: 20px;
-            padding: 50px;
-            max-width: 800px;
-            margin: 0 auto;
-            box-shadow: 0 0 50px rgba(183, 148, 246, 0.3);
-        }
+    .love-letter {
+      background: rgba(0, 0, 0, 0.8);
+      border: 3px solid #b794f6;
+      border-radius: 20px;
+      padding: 50px;
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: 0 0 50px rgba(183, 148, 246, 0.3);
+    }
 
-        .letter-title {
-            font-size: 2.5em;
-            color: #b794f6;
-            text-align: center;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-        }
+    .letter-title {
+      font-size: 2.5em;
+      color: #b794f6;
+      text-align: center;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+    }
 
-        .letter-content {
-            font-size: 1.2em;
-            line-height: 2;
-            color: #ddd;
-            text-align: justify;
-        }
+    .letter-content {
+      font-size: 1.2em;
+      line-height: 2;
+      color: #ddd;
+      text-align: justify;
+    }
 
-        .letter-content p {
-            margin-bottom: 20px;
-        }
+    .letter-content p {
+      margin-bottom: 20px;
+    }
 
-        .letter-signature {
-            text-align: right;
-            font-size: 1.5em;
-            color: #b794f6;
-            margin-top: 30px;
-            font-style: italic;
-        }
+    .letter-signature {
+      text-align: right;
+      font-size: 1.5em;
+      color: #b794f6;
+      margin-top: 30px;
+      font-style: italic;
+    }
 
-        /* Galería */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 20px;
-        }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      padding: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-        .photo-card {
-            background: rgba(0, 0, 0, 0.7);
-            border: 3px solid #b794f6;
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
+    .photo-card {
+      background: rgba(0, 0, 0, 0.7);
+      border: 3px solid #b794f6;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
 
-        .photo-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(183, 148, 246, 0.5);
-        }
+    .photo-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(183, 148, 246, 0.5);
+    }
 
-        .photo-placeholder {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(135deg, #b794f6 0%, #7c3aed 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4em;
-        }
+    .photo-card:nth-child(3) {
+      grid-column: 1 / -1;
+      max-width: 700px;
+      margin: 0 auto;
+      width: 100%;
+    }
 
-        .photo-caption {
-            padding: 20px;
-            text-align: center;
-            font-size: 1.1em;
-            color: #ddd;
-        }
+    .photo-placeholder {
+      width: 100%;
+      height: 500px;
+      background: linear-gradient(135deg, #b794f6 0%, #7c3aed 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4em;
+    }
 
-        @media (max-width: 768px) {
-            .game-title {
-                font-size: 1.8em;
-            }
+    .photo-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-            .main-title {
-                font-size: 2em;
-            }
+    .photo-caption {
+      padding: 20px;
+      text-align: center;
+      font-size: 1.1em;
+      color: #ddd;
+    }
 
-            .love-letter {
-                padding: 30px;
-            }
+    @media (max-width: 768px) {
+      .game-title {
+        font-size: 1.8em;
+      }
 
-            .floating-heart {
-                font-size: 2.5em;
-            }
-        }
-    </style>
+      .main-title {
+        font-size: 2em;
+      }
+
+      .love-letter {
+        padding: 30px;
+      }
+
+      .floating-heart {
+        font-size: 2.5em;
+      }
+    }
+  </style>
 </head>
 <body>
-<!-- Pantalla del Juego -->
 <div id="game-screen">
-    <div class="game-header">
-        <h1 class="game-title">💜 Atrapa los Corazones 💜</h1>
-        <p class="game-subtitle">¡Atrapa los corazones haciendo clic en ellos!</p>
-        <div class="game-stats">
-            <div class="stat-item">
-                <span class="stat-label">Atrapados:</span>
-                <span id="caught-count">0</span>/12
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">Progreso:</span>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress"></div>
-                </div>
-            </div>
+  <div class="game-header">
+    <h1 class="game-title">💜 Atrapa los Corazones 💜</h1>
+    <p class="game-subtitle">¡Atrapa los corazones haciendo clic en ellos!</p>
+    <div class="game-stats">
+      <div class="stat-item">
+        <span class="stat-label">Atrapados:</span>
+        <span id="caught-count">0</span>/12
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Progreso:</span>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress"></div>
         </div>
+      </div>
     </div>
+  </div>
 
-    <div class="game-area" id="game-area"></div>
+  <div class="game-area" id="game-area"></div>
 </div>
 
 <div class="modal" id="modal">
-    <div class="modal-content">
-        <div class="modal-icon" id="modal-icon"></div>
-        <h2 class="modal-title" id="modal-title"></h2>
-        <p class="modal-text" id="modal-text"></p>
-        <button class="modal-button" onclick="closeModal()">Continuar</button>
-    </div>
+  <div class="modal-content">
+    <div class="modal-icon" id="modal-icon"></div>
+    <h2 class="modal-title" id="modal-title"></h2>
+    <p class="modal-text" id="modal-text"></p>
+    <button class="modal-button" onclick="closeModal()">Continuar</button>
+  </div>
 </div>
 
 <div id="main-screen">
-    <div class="main-header">
-        <h1 class="main-title">Para Ti 💜</h1>
-        <p class="main-subtitle">Con todo mi amor</p>
+  <div class="main-header">
+    <h1 class="main-title">Para Ti Angel 💜</h1>
+    <p class="main-subtitle">Con todo mi amor</p>
+  </div>
+
+  <div class="main-buttons">
+    <button class="main-btn active" onclick="showSection('letter')">💌 Carta de Amor</button>
+    <button class="main-btn" onclick="showSection('gallery')">📸 Nuestros Momentos</button>
+  </div>
+
+  <div class="content-section active" id="letter-section">
+    <div class="love-letter">
+      <h2 class="letter-title">Mi Amor,</h2>
+      <div class="letter-content">
+        <p>No sé ni por dónde empezar, porque hay tanto que quiero decirte y a veces las palabras se quedan cortas para expresar todo lo que siento.</p>
+
+        <p>Desde que llegaste a mi vida, todo cambió. Tú le diste color a mis días grises, calma a mis silencios y sentido a cada momento. Eres esa persona con la que quiero compartir las risas más locas, los abrazos más largos y hasta los días más simples.</p>
+
+        <p>Me encanta tu forma de ser, lo auténtico que eres en todo lo que haces, tu manera de ver el mundo y cómo logras hacerme sentir especial sin siquiera intentarlo. Me enamoran tus detalles, tu risa, tu mirada… todo de ti.</p>
+
+        <p>Quiero que sepas que no importa lo que pase, siempre estaré aquí para ti. Para los días buenos, para celebrar tus logros, pero también para los días difíciles, para escucharte, apoyarte y recordarte lo increíble que eres.</p>
+
+        <p>Gracias por ser tú, por dejarme ser parte de tu vida, por cada sonrisa, cada momento compartido, cada mensaje y cada segundo que hemos vivido juntos. Eres mi persona favorita, mi lugar seguro, mi hogar.</p>
+
+        <p>Te amo más de lo que las palabras pueden expresar. Hoy, mañana y siempre.</p>
+      </div>
+      <p class="letter-signature">Con todo mi corazón 💜</p>
     </div>
+  </div>
 
-    <div class="main-buttons">
-        <button class="main-btn active" onclick="showSection('letter')">💌 Carta de Amor</button>
-        <button class="main-btn" onclick="showSection('gallery')">📸 Nuestros Momentos</button>
-    </div>
-
-    <!-- Carta de Amor -->
-    <div class="content-section active" id="letter-section">
-        <div class="love-letter">
-            <h2 class="letter-title">Mi Amor,</h2>
-            <div class="letter-content">
-                <p>No sé ni por dónde empezar, porque hay tanto que quiero decirte y a veces las palabras se quedan cortas para expresar todo lo que siento.</p>
-
-                <p>Desde que llegaste a mi vida, todo cambió. Tú le diste color a mis días grises, música a mis silencios, y sentido a cada momento. Eres esa persona con la que quiero compartir las risas más locas, los abrazos más largos, y hasta los días más simples.</p>
-
-                <p>Me encanta tu estilo único, cómo eres auténtico en todo lo que haces, tu forma de ver el mundo y cómo me haces sentir especial sin siquiera intentarlo. Me enamoran tus detalles, tu risa, tu mirada, todo de ti.</p>
-
-                <p>Quiero que sepas que no importa lo que pase, siempre estaré aquí para ti. Para los días buenos, para celebrar tus triunfos, pero también para los días difíciles, para escucharte, apoyarte y recordarte lo increíble que eres.</p>
-
-                <p>Gracias por ser tú, por dejarme ser parte de tu vida, por cada sonrisa, cada momento compartido, cada mensaje y cada segundo que hemos vivido juntos. Eres mi persona favorita, mi lugar seguro, mi hogar.</p>
-
-                <p>Te amo más de lo que las palabras pueden expresar. Hoy, mañana y siempre.</p>
-            </div>
-            <p class="letter-signature">Con todo mi corazón 💜</p>
+  <div class="content-section" id="gallery-section">
+    <div class="gallery-grid">
+      <div class="photo-card">
+        <div class="photo-placeholder">
+          <img src="img/foto01.jpg" alt="Momentos juntos">
         </div>
-    </div>
-
-    <div class="content-section" id="gallery-section">
-        <div class="gallery-grid">
-            <div class="photo-card">
-                <div class="photo-placeholder">
-                  <img src="img/foto01.jpg" alt="Descripción de la foto">
-                </div>
-                <div class="photo-caption">Acá algunos momentos juntos 💜</div>
-            </div>
-            <div class="photo-card">
-                <div class="photo-placeholder">
-                  <img src="img/foto02.jpg" alt="Descripción de la foto">
-                </div>
-              <div class="photo-caption">Tus hermosos ojitos, mis ojitos chinos.</div>
-            </div>
-            <div class="photo-card">
-                <div class="photo-placeholder">
-                  <img src="img/foto03.jpg" alt="Descripción de la foto">
-                </div>
-                <div class="photo-caption">Tú jugando con la play 💜 </div>
-            </div>
-            <div class="photo-card">
-                <div class="photo-placeholder">
-                  <img src="img/foto04.jpg" alt="Descripción de la foto">
-                </div>
-                <div class="photo-caption">Tú y solamente tú</div>
-            </div>
+        <div class="photo-caption">Acá algunos momentos juntos 💜</div>
+      </div>
+      <div class="photo-card">
+        <div class="photo-placeholder">
+          <img src="img/foto02.jpg" alt="Ojitos chinos">
         </div>
+        <div class="photo-caption">Tus hermosos ojitos, mis ojitos chinos.</div>
+      </div>
+      <div class="photo-card">
+        <div class="photo-placeholder">
+          <img src="img/foto03.jpg" alt="Jugando play">
+        </div>
+        <div class="photo-caption">Tú jugando con la play 💜</div>
+      </div>
     </div>
+  </div>
 </div>
 
 <script>
-    const heartTypes = [
-        { icon: '❤️', type: 'red', label: 'Reto' },
-        { icon: '💙', type: 'blue', label: 'Romántico' },
-        { icon: '🤍', type: 'white', label: 'Confesión' },
-        { icon: '💜', type: 'purple', label: 'Especial' }
-    ];
+  const heartTypes = [
+    { icon: '❤️', type: 'red', label: 'Reto' },
+    { icon: '💙', type: 'blue', label: 'Romántico' },
+    { icon: '🤍', type: 'white', label: 'Confesión' },
+    { icon: '💜', type: 'purple', label: 'Especial' }
+  ];
 
-    const challenges = {
-        red: [
-            "Reto: Envíame una foto tuya con tu outfit favorito 😎",
-            "Reto: Dime 3 cosas que te gustan de ti mismo 💪",
-            "Reto: Manda un audio cantando tu canción favorita 🎤"
-        ],
-        blue: [
-            "Eres la persona más hermosa que he conocido, por dentro y por fuera 💙",
-            "Cada día contigo es un regalo que atesoro 💫",
-            "Tu sonrisa ilumina hasta mis días más oscuros ✨"
-        ],
-        white: [
-            "Confesión: Me encanta cuando usas ropa baggy, te ves increíble 🖤",
-            "¿Cuál ha sido tu momento favorito que hemos compartido? 💭",
-            "Confesión: Pienso en ti más de lo que crees 💜"
-        ],
-        purple: [
-            "Eres especial porque eres único, auténtico y perfecto tal como eres 💜",
-            "Me haces querer ser mejor persona cada día 🌟",
-            "Contigo, hasta lo ordinario se vuelve extraordinario ✨"
-        ]
-    };
+  const challenges = {
+    red: [
+      "Reto: Envíame una foto tuya con tu outfit favorito 😎",
+      "Reto: Dime 3 cosas que te gustan de ti mismo 💪",
+      "Reto: Manda un audio cantando tu canción favorita 🎤"
+    ],
+    blue: [
+      "Eres una de las personas más increíbles que he conocido, por dentro y por fuera 💙",
+      "Cada día contigo es un regalo que valoro muchísimo 💫",
+      "Tu sonrisa puede cambiar por completo mi día ✨"
+    ],
+    white: [
+      "Confesión: Me encanta cuando te vistes cómodo, te ves increíble 🖤",
+      "¿Cuál ha sido tu momento favorito que hemos compartido? 💭",
+      "Confesión: Pienso en ti más de lo que imaginas 💜"
+    ],
+    purple: [
+      "Eres especial porque eres auténtico, único y increíble tal como eres 💜",
+      "Me haces querer ser mejor persona cada día 🌟",
+      "Contigo, hasta lo simple se vuelve especial ✨"
+    ]
+  };
 
-    let caughtHearts = 0;
-    const totalHearts = 12;
-    let gameActive = true;
-    let spawnInterval;
 
-    function spawnHeart() {
-        if (!gameActive) return;
+  let caughtHearts = 0;
+  const totalHearts = 12;
+  let gameActive = true;
+  let spawnInterval;
 
-        const gameArea = document.getElementById('game-area');
-        const heart = document.createElement('div');
-        const randomHeart = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+  function spawnHeart() {
+    if (!gameActive) return;
 
-        heart.className = 'floating-heart';
-        heart.innerHTML = randomHeart.icon;
-        heart.dataset.type = randomHeart.type;
-        heart.dataset.label = randomHeart.label;
+    const gameArea = document.getElementById('game-area');
+    const heart = document.createElement('div');
+    const randomHeart = heartTypes[Math.floor(Math.random() * heartTypes.length)];
 
-        const maxX = window.innerWidth - 80;
-        const randomX = Math.random() * maxX;
-        heart.style.left = randomX + 'px';
-        heart.style.top = '-80px';
+    heart.className = 'floating-heart';
+    heart.innerHTML = randomHeart.icon;
+    heart.dataset.type = randomHeart.type;
+    heart.dataset.label = randomHeart.label;
 
-        const duration = 3 + Math.random() * 2;
-        heart.style.animationDuration = duration + 's';
+    const maxX = window.innerWidth - 80;
+    const randomX = Math.random() * maxX;
+    heart.style.left = randomX + 'px';
+    heart.style.top = '-80px';
 
-        heart.onclick = () => catchHeart(heart, randomHeart);
+    const duration = 3 + Math.random() * 2;
+    heart.style.animationDuration = duration + 's';
 
-        gameArea.appendChild(heart);
+    heart.onclick = () => catchHeart(heart, randomHeart);
 
-        setTimeout(() => {
-            if (heart.parentNode) {
-                heart.remove();
-            }
-        }, duration * 1000);
+    gameArea.appendChild(heart);
+
+    setTimeout(() => {
+      if (heart.parentNode) {
+        heart.remove();
+      }
+    }, duration * 1000);
+  }
+
+  function catchHeart(heartElement, heartData) {
+    if (!heartElement.classList.contains('captured')) {
+      heartElement.classList.add('captured');
+      caughtHearts++;
+
+      updateStats();
+      showModal(heartData);
+
+      setTimeout(() => {
+        heartElement.remove();
+      }, 500);
+
+      if (caughtHearts >= totalHearts) {
+        endGame();
+      }
     }
+  }
 
-    function catchHeart(heartElement, heartData) {
-        if (!heartElement.classList.contains('captured')) {
-            heartElement.classList.add('captured');
-            caughtHearts++;
+  function updateStats() {
+    document.getElementById('caught-count').textContent = caughtHearts;
+    const percentage = (caughtHearts / totalHearts) * 100;
+    document.getElementById('progress').style.width = percentage + '%';
+  }
 
-            updateStats();
-            showModal(heartData);
+  function showModal(heartData) {
+    const messages = challenges[heartData.type];
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
 
-            setTimeout(() => {
-                heartElement.remove();
-            }, 500);
+    document.getElementById('modal-icon').textContent = heartData.icon;
+    document.getElementById('modal-title').textContent = heartData.label;
+    document.getElementById('modal-text').textContent = randomMessage;
+    document.getElementById('modal').classList.add('active');
 
-            if (caughtHearts >= totalHearts) {
-                endGame();
-            }
-        }
+    gameActive = false;
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('active');
+    gameActive = true;
+  }
+
+  function endGame() {
+    clearInterval(spawnInterval);
+    gameActive = false;
+
+    setTimeout(() => {
+      document.getElementById('game-screen').style.display = 'none';
+      document.getElementById('main-screen').classList.add('active');
+    }, 1000);
+  }
+
+  function showSection(section) {
+    document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.main-btn').forEach(b => b.classList.remove('active'));
+
+    if (section === 'letter') {
+      document.getElementById('letter-section').classList.add('active');
+      document.querySelectorAll('.main-btn')[0].classList.add('active');
+    } else {
+      document.getElementById('gallery-section').classList.add('active');
+      document.querySelectorAll('.main-btn')[1].classList.add('active');
     }
+  }
 
-    function updateStats() {
-        document.getElementById('caught-count').textContent = caughtHearts;
-        const percentage = (caughtHearts / totalHearts) * 100;
-        document.getElementById('progress').style.width = percentage + '%';
-    }
+  spawnInterval = setInterval(spawnHeart, 800);
 
-    function showModal(heartData) {
-        const messages = challenges[heartData.type];
-        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-
-        document.getElementById('modal-icon').textContent = heartData.icon;
-        document.getElementById('modal-title').textContent = heartData.label;
-        document.getElementById('modal-text').textContent = randomMessage;
-        document.getElementById('modal').classList.add('active');
-        gameActive = false;
-    }
-
-    function closeModal() {
-        document.getElementById('modal').classList.remove('active');
-        gameActive = true;
-    }
-
-    function endGame() {
-        clearInterval(spawnInterval);
-        gameActive = false;
-
-        setTimeout(() => {
-            document.getElementById('game-screen').style.display = 'none';
-            document.getElementById('main-screen').classList.add('active');
-        }, 1000);
-    }
-
-    function showSection(section) {
-        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.main-btn').forEach(b => b.classList.remove('active'));
-
-        if (section === 'letter') {
-            document.getElementById('letter-section').classList.add('active');
-            document.querySelectorAll('.main-btn')[0].classList.add('active');
-        } else {
-            document.getElementById('gallery-section').classList.add('active');
-            document.querySelectorAll('.main-btn')[1].classList.add('active');
-        }
-    }
-
-    spawnInterval = setInterval(spawnHeart, 800);
-
-    setTimeout(() => spawnHeart(), 500);
+  setTimeout(() => spawnHeart(), 500);
 </script>
 </body>
 </html>
